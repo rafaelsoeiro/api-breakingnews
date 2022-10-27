@@ -1,17 +1,23 @@
 const express = require("express");
 const app = express();
-const userRoute = require('./src/routes/user.route')
+const connectDatabase = require("./src/databases/db");
 
-app.use("/hello", userRoute)
+const userRoute = require("./src/routes/user.route");
+const port = 3000; // variavel de ambiente
 
+connectDatabase();
 
-//ROTAS 
+app.use(express.json());
+app.use("/user", userRoute);
+
+app.listen(port, () =>
+    console.log(`O servidor está rodando na porta: ${port}`)
+);
+
+//ROTAS
 // http METHOD -- CRUD  (create, read, delete, upadate)
-    // GET - Pega uma info
-    // POST - Cria uma info
-    // PUT - Altera toda a info
-    // PATH - Altera parte de uma info
-    // DELETE - Apaga uma info
-
-
-app.listen(3000);
+// GET - Pega uma info
+// POST - Cria uma info
+// PUT - Altera toda a info
+// PATH - Altera parte de uma info
+// DELETE - Apaga uma info
