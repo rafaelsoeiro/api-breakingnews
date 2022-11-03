@@ -1,8 +1,9 @@
-const userService = require("../services/user.service");
+import userService from "../services/user.service.js";
 
 const create = async (req, res) => {
     try {
-        const { name, username, email, password, avatar, background } = req.body;
+        const { name, username, email, password, avatar, background } =
+            req.body;
 
         if (
             !name ||
@@ -98,7 +99,7 @@ const update = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     create,
     findAll,
     findById,

@@ -1,12 +1,13 @@
-const route = require("express").Router(); // instancia o express na variavel e prepara o ambiente para a criação de rotas
-const userController = require("../controllers/user.controller");
-const { validId, validUser } = require("../middlewares/global.middlewares");
+import express from "express";
+import userController from "../controllers/user.controller.js";
+import { validId, validUser } from "../middlewares/global.middlewares.js";
 
-//route.verboHTTP("/URL",middleware, controller);
+const router = express.Router(); // instancia o express na variavel e prepara o ambiente para a criação de rotas
 
-route.post("/", userController.create);
-route.get("/", userController.findAll);
-route.get("/:id", validId, validUser, userController.findById);
-route.patch("/:id", validId, validUser, userController.update);
+//router.verboHTTP("/URL",middleware, controller);
+router.post("/", userController.create);
+router.get("/", userController.findAll);
+router.get("/:id", validId, validUser, userController.findById);
+router.patch("/:id", validId, validUser, userController.update);
 
-module.exports = route;
+export default router;
