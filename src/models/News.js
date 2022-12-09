@@ -19,11 +19,11 @@ const NewSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: user,
+        ref: "User",
         required: true,
     },
     likes: {
-        type: Array,
+        type: Array, 
         required: true,
     },
     coments: {
@@ -34,4 +34,4 @@ const NewSchema = new mongoose.Schema({
 
 const News = mongoose.model("News", NewSchema);
 
-export default news;
+export default News;
