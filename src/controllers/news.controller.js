@@ -14,10 +14,10 @@ const create = async (req, res) => {
             title,
             text,
             banner,
-            user: { _id: "63581c5fd0e85198b4ada358" },
+            user: req.userId,
         });
 
-        res.send(201);
+        res.sendStatus(201);
     } catch (err) {
         res.status(500).send({ message: err.massege });
     }
