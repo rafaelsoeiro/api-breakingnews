@@ -5,6 +5,7 @@ import {
     countNews,
     topNewsService,
     searchByTitleService,
+    byUserService,
 } from "../services/news.service.js";
 
 export const create = async (req, res) => {
@@ -131,7 +132,6 @@ export const findById = async (req, res) => {
         res.status(500).send({ message: err.message });
     }
 };
-
 export const searchByTitle = async (req, res) => {
     try {
         const { title } = req.query;
@@ -156,6 +156,27 @@ export const searchByTitle = async (req, res) => {
             })),
         });
     } catch (err) {
+        res.status(500).send({ message: err.massege });
+    }
+};
+export const byUser = async (req, res) => {
+    try {
+        const id = req.userId;
+        const news = await byUserService(id);
+        return res.send({
+            results: news.map((item) => ({
+                id: item._id,
+                title: item.title,
+                text: item.text,
+                banner: item.banner,
+                likes: item.likes,
+                comments: item.comments,
+                name: item.user.name,
+                username: item.user.username,
+                userAvatar: item.user.avatar,
+            })),
+        });
+    } catch (error) {
         res.status(500).send({ message: err.massege });
     }
 };
