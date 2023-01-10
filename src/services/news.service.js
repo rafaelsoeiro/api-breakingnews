@@ -10,7 +10,7 @@ export const countNews = () => News.countDocuments();
 export const topNewsService = () =>
     News.findOne().sort({ _id: -1 }).populate("user");
 
-export const findByIdservice = (id) => News.findById(id).populate("user");
+export const findByIdService = (id) => News.findById(id).populate("user");
 
 export const searchByTitleService = (title) =>
     News.find({
@@ -21,3 +21,10 @@ export const searchByTitleService = (title) =>
 
 export const byUserService = (id) =>
     News.find({ user: id }).sort({ _id: -1 }).populate("user");
+
+export const updateService = (id, titulo, texto, banner) =>
+    News.findOneAndUpdate(
+        { _id: id },
+        { titulo, texto, banner },
+        { rawResult: true }
+    );

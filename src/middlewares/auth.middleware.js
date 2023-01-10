@@ -22,7 +22,7 @@ export const authMiddleware = (req, res, next) => {
         const [schema, token] = parts;
 
         if (schema !== "Bearer") {
-            res.send(401);
+            res.sendStatus(401);
         }
 
         jwt.verify(token, process.env.SECRET_JWT, async (error, decoded) => {
@@ -30,7 +30,6 @@ export const authMiddleware = (req, res, next) => {
                 res.status(401).send({ message: "Token invalid" });
             }
 
-            
             const user = await userService.findByIdService(decoded.id);
             if (!user || !user.id) {
                 res.status(401).send({ message: "Invalid token" });

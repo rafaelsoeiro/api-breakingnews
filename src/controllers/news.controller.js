@@ -1,11 +1,12 @@
 import {
     createService,
     findAllService,
-    findByIdservice,
+    findByIdService,
     countNews,
     topNewsService,
     searchByTitleService,
     byUserService,
+    updateService,
 } from "../services/news.service.js";
 
 export const create = async (req, res) => {
@@ -44,9 +45,9 @@ export const findAll = async (req, res) => {
 
         const next = offset + limit;
         const total = await countNews();
-        console.log(total);
+        
         const currentUrl = req.baseUrl;
-        console.log(currentUrl);
+        
         const nextUrl =
             next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
 
@@ -177,5 +178,31 @@ export const byUser = async (req, res) => {
         });
     } catch (error) {
         res.status(500).send({ message: error.massege });
+    }
+};
+export const update = async (req, res) => {
+    try {
+        const { title, text, banner } = req.body;
+        const { id } = req.params;
+
+        if (!title && !banner && !text) {
+            res.status(400).send({
+                message: "Submit at least one field to update the News",
+            });
+        }
+
+        const news = await findByIdService(id);
+
+        if (String(news.user._id) !== req.userId) {
+            return res.status(400).send({
+                message: "You didn't update this News",
+            });
+        }
+
+        await updateService(id, title, text, banner);
+
+        return res.send({ message: "News successfully updated!" });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
     }
 };
