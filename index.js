@@ -9,7 +9,7 @@ dotenv.config();
 
 // const userRoute = require("./src/routes/user.route");
 // const connectDatabase = require("./src/databases/db");
- 
+
 const app = express();
 const port = process.env.PORT || 3000; // variavel de ambiente
 
@@ -19,9 +19,10 @@ app.use(express.json());
 app.use("/user", userRoute);
 app.use("/auth", authRoute);
 app.use("/news", newsRoute);
-app.listen(port, () =>
-    console.log(`O servidor está rodando na porta: ${port}`)
-);
+app.listen(port, () => {
+    console.clear();
+    console.log(`O servidor está rodando na porta: ${port}`);
+});
 
 //ROTAS
 // http METHOD -- CRUD  (create, read, delete, upadate)

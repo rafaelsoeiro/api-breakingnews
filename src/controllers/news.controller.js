@@ -8,6 +8,8 @@ import {
     byUserService,
     updateService,
     eraseService,
+    likeNewsService,
+    deleteLikeNewsService,
 } from "../services/news.service.js";
 
 export const create = async (req, res) => {
@@ -221,6 +223,26 @@ export const erase = async (req, res) => {
         await eraseService(id);
 
         return res.send({ message: "News deleted successfully" });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
+export const likeNews = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.userId;
+
+        const newsLiked = await likeNewsService(id, userId);
+
+        console.log(newsLiked);
+
+        if (!newsLiked) {
+            await deleteLikeNewsService(id, userId);
+            return res
+                .status(200)
+                .send({ message: "Liked successfully removed" });
+        }
+        res.send({ message: "News liked successfully" });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

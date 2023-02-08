@@ -28,4 +28,13 @@ export const updateService = (id, titulo, texto, banner) =>
         { titulo, texto, banner },
         { rawResult: true }
     );
-export const eraseService = (id) => News.findByIdAndDelete({_id:id})
+export const eraseService = (id) => News.findByIdAndDelete({ _id: id });
+
+export const likeNewsService = (newsId, userId) =>
+    News.findOneAndUpdate(
+        { _id: newsId, "likes.userId": { $nin: [userId] } },
+        { $push: { likes: { userId, created: new Date() } } }
+    );
+
+export const deleteLikeNewsService = (newsId, userId) =>
+    News.findOneAndUpdate({ _id: newsId }, { $pull: { likes: { userId } } });
