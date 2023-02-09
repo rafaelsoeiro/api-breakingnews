@@ -26,7 +26,7 @@ const NewSchema = new mongoose.Schema({
         type: Array, 
         required: true,
     },
-    coments: {
+    comments: {
         type: Array,
         required: true,
     },

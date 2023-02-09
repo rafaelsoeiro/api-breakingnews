@@ -9,6 +9,8 @@ import {
     update,
     erase,
     likeNews,
+    addComment,
+    deleteComment,
 } from "../controllers/news.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 const router = Router();
@@ -22,6 +24,8 @@ router.get("/:id", authMiddleware, findById);
 
 router.patch("/:id", authMiddleware, update);
 router.patch("/like/:id", authMiddleware, likeNews);
+router.patch("/comment/:id", authMiddleware, addComment);
+router.patch("/comment/:newsId/:commentId", authMiddleware, deleteComment);
 
 router.delete("/:id", authMiddleware, erase);
 

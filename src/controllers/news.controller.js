@@ -10,6 +10,8 @@ import {
     eraseService,
     likeNewsService,
     deleteLikeNewsService,
+    addCommentService,
+    deleteCommentService,
 } from "../services/news.service.js";
 
 export const create = async (req, res) => {
@@ -118,7 +120,8 @@ export const findById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const news = await findByIdservice(id);
+        const news = await findByIdService(id);
+        // console.log(news)
         res.send({
             news: {
                 id: news._id,
@@ -173,7 +176,7 @@ export const byUser = async (req, res) => {
                 text: item.text,
                 banner: item.banner,
                 likes: item.likes,
-                comments: item.comments,
+                comemnts: item.comments,
                 name: item.user.name,
                 username: item.user.username,
                 userAvatar: item.user.avatar,
@@ -243,6 +246,36 @@ export const likeNews = async (req, res) => {
                 .send({ message: "Liked successfully removed" });
         }
         res.send({ message: "News liked successfully" });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
+export const addComment = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userid = req.userId;
+        const { comment } = req.body;
+        if (!comment) {
+            res.status(400).send({ message: "White a message to comment!" });
+        }
+        await addCommentService(id, userid, comment);
+        res.send({ message: "Comment successfully completed" });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
+export const deleteComment = async (req, res) => {
+    try {
+        const { newsId, commentId } = req.params;
+        const userid = req.userId;
+
+        const commentDeleted = await deleteCommentService(
+            newsId,
+            userid,
+            commentId
+        );
+        console.log(commentDeleted);
+        res.send({ message: "Comment deleted successfully" });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

@@ -38,3 +38,26 @@ export const likeNewsService = (newsId, userId) =>
 
 export const deleteLikeNewsService = (newsId, userId) =>
     News.findOneAndUpdate({ _id: newsId }, { $pull: { likes: { userId } } });
+
+export const addCommentService = (newsId, userId, comment) => {
+    const commentId = Math.floor(Date.now() * Math.random()).toString(24);
+
+    return News.findOneAndUpdate(
+        { _id: newsId },
+        {
+            $push: {
+                comments: { commentId, userId, comment, createdAt: new Date() },
+            },
+        }
+    );
+};
+export const deleteCommentService = (newsId, userId, commentId) => {
+    return News.findOneAndUpdate(
+        { _id: newsId },
+        {
+            $pull: {
+                comments: { commentId, userId },
+            },
+        }
+    );
+};
