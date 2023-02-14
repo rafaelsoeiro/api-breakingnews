@@ -274,7 +274,18 @@ export const deleteComment = async (req, res) => {
             userid,
             commentId
         );
-        console.log(commentDeleted);
+        const commentFinder = commentDeleted.comments.find(
+            (comment) => comment.commentId === commentId
+        );
+        if (!commentFinder) {
+            return res.status(404).send({ message: "Comment not found" });
+        }
+
+        if (commentFinder.userId !== userid) {
+            return res
+                .status(400)
+                .send({ message: "You can't delete this comment" });
+        }
         res.send({ message: "Comment deleted successfully" });
     } catch (err) {
         res.status(500).send({ message: err.message });
