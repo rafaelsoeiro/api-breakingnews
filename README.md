@@ -1,6 +1,6 @@
 ### API Breaking News
 
-Este projeto é uma API desenvolvida por Rafael Soeiro para um projeto pessoal chamado SPA Breaking News. Ele fornece funcionalidades relacionadas à autenticação, gerenciamento de notícias e muito mais.
+Este projeto é uma API desenvolvida por Rafael Soeiro para um projeto pessoal chamado Breaking News. Ele fornece funcionalidades relacionadas à autenticação, gerenciamento de notícias e muito mais.
 
 #### Instalação
 
